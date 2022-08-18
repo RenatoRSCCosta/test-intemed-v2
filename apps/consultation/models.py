@@ -8,4 +8,4 @@ class Consultation(models.Model):
     appointment_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Consulta no horario de {self.schedules_id.hour} no dia {self.schedule_id.date}"
+        return f"Consulta no horario de {self.schedules_id.hour} no dia {self.schedule_id.date} https://github.com/RenatoRSCCosta/test-intemed-v2.git"
