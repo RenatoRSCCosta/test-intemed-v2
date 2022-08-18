@@ -1,3 +1,4 @@
+from enum import unique
 from re import M
 from django.db import models
 from schedule.models import Schedule, Schedules
@@ -9,3 +10,6 @@ class Consultation(models.Model):
 
     def __str__(self):
         return f"Consulta no horario de {self.schedules_id.hour} no dia {self.schedule_id.date}"
+    
+    class Meta:
+        unique_together = ("shedule_id", "shedules_id")
