@@ -1,5 +1,3 @@
-from enum import unique
-from re import M
 from django.db import models
 from schedule.models import Schedule, Schedules
 
