@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+from email.policy import default
 import os, sys
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()  # loads the configs from .env
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'doctor',
     'schedule',
+    'consultation',
 ]
 
 MIDDLEWARE = [
@@ -77,12 +80,8 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
+DATABASES = {'default' : dj_database_url.config(default=os.environ['DATABASE_URL'])}
 
 
 # Password validation
