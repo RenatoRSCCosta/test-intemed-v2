@@ -22,5 +22,5 @@ class Schedules(models.Model):
     
     class Meta:
         ordering = ["hour"]
-        unique_together = ("schedule_id", "hour")
+        unique_together = ("schedule", "hour")
         

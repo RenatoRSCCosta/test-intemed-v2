@@ -10,4 +10,4 @@ class Consultation(models.Model):
         return f"Consulta no horario de {self.schedules.hour} no dia {self.schedule.date}"
     
     class Meta:
-        unique_together = ("schedule_id", "schedules_id")
+        unique_together = ("schedule", "schedules")
