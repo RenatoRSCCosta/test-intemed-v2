@@ -7,7 +7,7 @@ class Schedule(models.Model):
     availabe = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Agenda de {self.doctor_id} para data de {self.date}"
+        return f"Agenda de {self.doctor} para data de {self.date}"
     
     class Meta:
         ordering = ["date"]
@@ -18,7 +18,7 @@ class Schedules(models.Model):
     availabe = models.BooleanField(default=True)
     
     def __str__(self):
-        return f"horario {self.hour} para agenda na data de {self.schedule_id.date}"
+        return f"horario {self.hour} para agenda na data de {self.schedule.date}"
     
     class Meta:
         ordering = ["hour"]
