@@ -18,7 +18,7 @@ class Schedules(models.Model):
     availabe = models.BooleanField(default=True)
     
     def __str__(self):
-        return f"horario {self.hour} para agenda na data de {self.schedule.date}"
+        return str(self.hour)[:5]
     
     class Meta:
         ordering = ["hour"]
