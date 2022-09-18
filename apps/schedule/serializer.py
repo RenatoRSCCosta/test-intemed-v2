@@ -18,5 +18,5 @@ class ScheduleSerializer(serializers.ModelSerializer):
             'id',
             'doctor', 
             'date',
-            'Schedule' 
+            'schedules_schedule' 
         )

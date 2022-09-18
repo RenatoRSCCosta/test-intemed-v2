@@ -2,7 +2,7 @@ from django.db import models
 from doctor.models import Doctor
 
 class Schedule(models.Model):
-    doctor = models.ForeignKey(Doctor, related_name="Doctor", on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, related_name="schedule_doctor", on_delete=models.CASCADE)
     date = models.DateField()
     availabe = models.BooleanField(default=True)
 
@@ -13,7 +13,7 @@ class Schedule(models.Model):
         ordering = ["date"]
     
 class Schedules(models.Model):
-    schedule = models.ForeignKey(Schedule, related_name="Schedule", on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, related_name="schedules_schedule", on_delete=models.CASCADE)
     hour = models.TimeField()
     availabe = models.BooleanField(default=True)
     

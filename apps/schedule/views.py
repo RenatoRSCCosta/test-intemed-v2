@@ -13,8 +13,9 @@ class ScheduleViewSet(GenericViewSet):
     def get_queryset(self):
         today = date.today()
         now = datetime.now().strftime('%H:%M')
-        self.queryset = Schedule.objects.filter(Q(date__gt=today) | Q(date=today, Schedule__hour__gte=now)).distinct()
+        self.queryset = Schedule.objects.filter(Q(date__gt=today) | Q(date=today, schedules_schedule__hour__gte=now)).distinct()
         return self.queryset
+    
     def list(self, *args, **kwargs):
         qs = self.get_queryset()
         serializer = ScheduleSerializer(qs, many=True)
