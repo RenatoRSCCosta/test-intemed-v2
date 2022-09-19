@@ -15,7 +15,7 @@ class Schedule(models.Model):
 class Schedules(models.Model):
     schedule = models.ForeignKey(Schedule, related_name="schedules_schedule", on_delete=models.CASCADE)
     hour = models.TimeField()
-    availabe = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
     
     def __str__(self):
         return str(self.hour)[:5]
