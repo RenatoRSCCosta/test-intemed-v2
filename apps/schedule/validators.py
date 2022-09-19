@@ -1,5 +1,5 @@
-from datetime import date
-from schedule.models import Schedule
+from datetime import date, datetime
+from schedule.models import Schedule, Schedules
 
 def retroactive_day(schedule_date, errors_list):
     """validates if the schedule is being created for a retroactive day"""
@@ -24,3 +24,8 @@ def can_edit_schedules():
 def schedule_valid():
     """validates schedule and schedules according to business rules"""
     pass
+
+def schedules_available(schedule_id):
+    """validates if the schedule time has passed"""
+    now = datetime.now().strftime('%H:%M')
+    return Schedules.objects.filter(schedule=schedule_id, hour__gte=now, available=True)
