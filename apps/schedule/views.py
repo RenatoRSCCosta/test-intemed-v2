@@ -1,26 +1,20 @@
-from datetime import date, datetime
-from django.db.models import Q
-#from django_filters.rest_framework import DjangoFilterBackend
+from datetime import date
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-from schedule.models import Schedule, Schedules
-from schedule.serializer import ScheduleSerializer, SchedulesSerializer
-#from schedule.filters import ScheduleFilter
+from rest_framework.viewsets import ModelViewSet
+from schedule.models import Schedule
+from schedule.serializer import ScheduleSerializer
+from schedule.filters import ScheduleFilter
 
 
-class ScheduleViewSet(GenericViewSet):
+class ScheduleViewSet(ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
-    #filter_backends = (DjangoFilterBackend,)
-    #filterset_fields = ('doctor',)
-    #filterset_class = ScheduleFilter
+    filterset_class = ScheduleFilter
     
     def get_queryset(self):
-        today = date.today()
-        now = datetime.now().strftime('%H:%M')
-        return self.queryset.filter(date__gte=today, schedules_schedule__hour__gte=now)
+        return self.queryset.filter(date__gte=date.today())
     
     def list(self, *args, **kwargs):
-        qs = self.get_queryset()
-        serializer = ScheduleSerializer(qs, many=True)
+        queryset = self.get_queryset()
+        serializer = ScheduleSerializer(queryset, many=True)
         return Response(serializer.data)
