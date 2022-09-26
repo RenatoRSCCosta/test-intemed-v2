@@ -20,7 +20,7 @@ class SchedulesSerializer(serializers.ModelSerializer):
         
 class ScheduleSerializer(serializers.ModelSerializer):
 
-    schedules = serializers.SerializerMethodField('get_schedules', read_only=True)
+    schedules = serializers.SerializerMethodField('get_valid_schedules', read_only=True)
     doctor = DoctorSerializer(many=False, read_only=True)
     
     class Meta:
@@ -31,10 +31,10 @@ class ScheduleSerializer(serializers.ModelSerializer):
             'date',
             'schedules' 
         )
-        
-    def get_schedules(self, schedule_id):
-        qs = Schedules.objects.filter(Q (schedule=schedule_id, schedule__date=date.today(), 
-                                         hour__gte=datetime.now().strftime('%H:%M'), available=True) 
-                                     |Q (schedule=schedule_id, schedule__date__gte=date.today(), available=True))
+              
+    def get_valid_schedules(self, schedule_id):
+        qs = Schedules.objects.filter(Q(schedule_id=schedule_id, schedule__date=date.today(), 
+                                        hour__gte=datetime.now().strftime('%H:%M'), available=True)
+                                     |Q(schedule_id=schedule_id, schedule__date__gt=date.today(), available=True))
         serializer = SchedulesSerializer(instance=qs, many=True)
         return serializer.data
