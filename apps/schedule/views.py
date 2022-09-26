@@ -14,7 +14,7 @@ class ScheduleViewSet(ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(date__gte=date.today())
     
-    def list(self, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = ScheduleSerializer(queryset, many=True)
-        return Response(serializer.data)
+    #def list(self, *args, **kwargs):
+    #    queryset = self.get_queryset()
+    #    serializer = ScheduleSerializer(queryset, many=True)
+    #    return Response(serializer.data)
