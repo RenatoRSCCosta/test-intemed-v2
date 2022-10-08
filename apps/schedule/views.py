@@ -10,11 +10,11 @@ class ScheduleViewSet(ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
     filterset_class = ScheduleFilter
-    
+
     def get_queryset(self):
         return self.queryset.filter(date__gte=date.today())
-    
-    #def list(self, *args, **kwargs):
+
+    # def list(self, *args, **kwargs):
     #    queryset = self.get_queryset()
     #    serializer = ScheduleSerializer(queryset, many=True)
     #    return Response(serializer.data)
