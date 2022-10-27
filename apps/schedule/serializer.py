@@ -35,8 +35,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
         )
 
     def get_valid_schedules(self, schedule_id):
-        qs = Schedules.objects.filter(Q(schedule_id=schedule_id, schedule__date=date.today(),
-                                        hour__gte=datetime.now().strftime('%H:%M'), available=True)
-                                      | Q(schedule_id=schedule_id, schedule__date__gt=date.today(), available=True))
+        qs = Schedules.objects.filter(Q(schedule_id=schedule_id, schedule__date=date.today(),hour__gte=datetime.now().strftime('%H:%M'), available=True)
+        | Q(schedule_id=schedule_id, schedule__date__gt=date.today(), available=True))
         serializer = SchedulesSerializer(instance=qs, many=True)
         return serializer.data
