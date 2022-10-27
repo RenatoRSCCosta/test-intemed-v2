@@ -4,10 +4,10 @@ from rest_framework import routers
 from apps.schedule.views import ScheduleViewSet
 
 router = routers.DefaultRouter()
-router.register('schedule', ScheduleViewSet, basename="schedules")
+router.register('schedules', ScheduleViewSet, basename="schedule")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('schedules/', ScheduleList.as_view()),
+    #path('schedules/', ScheduleViewSet.as_view()),
     path('', include(router.urls)),
 ]

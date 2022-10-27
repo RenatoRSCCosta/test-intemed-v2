@@ -22,7 +22,7 @@ class ScheduleViewSet(ModelViewSet):
    
     def list(self, request, *args,):
         queryset = self.get_queryset()
-        filter_queryset = self.filter_class(queryset)
+        filter_queryset = self.filter_queryset(queryset)
         serializer = ScheduleSerializer(filter_queryset, many=True)
         return Response(serializer.data)
     
