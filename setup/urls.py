@@ -5,8 +5,8 @@ from apps.schedule.views import ScheduleViewSet
 from apps.consultation.views import ConsultationViewSet
 
 router = routers.DefaultRouter()
-router.register('schedules', ScheduleViewSet, basename="schedule")
-router.register('consultations', ConsultationViewSet, basename="consultation")
+router.register('schedules', ScheduleViewSet, basename="schedules")
+router.register('consultations', ConsultationViewSet, basename="consultations")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

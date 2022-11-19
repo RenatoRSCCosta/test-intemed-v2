@@ -5,6 +5,6 @@ def can_schedule(appointment):
     date = today()
     hour = now()
     print(appointment.hour)
-    if appointment.schedule.date >= date and appointment.hour.strftime('%H:%M:%S') >= hour:
+    if appointment.schedule.date >= date and appointment.hour.strftime('%H:%M:%S') >= hour and appointment.available == True:
         return True
     return False
