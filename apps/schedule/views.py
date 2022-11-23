@@ -2,14 +2,15 @@ from datetime import date, datetime
 from django.db.models import Q
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework import generics
 from schedule.models import Schedule
 from schedule.serializer import ScheduleSerializer
 from schedule.filters import ScheduleFilter
 
 
-class ScheduleViewSet(ModelViewSet):
+class ScheduleViewSet(GenericViewSet,
+                      mixins.ListModelMixin):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
     filter_backends = (filters.DjangoFilterBackend,)

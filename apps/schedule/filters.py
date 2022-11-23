@@ -29,4 +29,4 @@ class ScheduleFilter(filters.FilterSet):
     
     class Meta:
         model = Schedule
-        fields = ('doctor', 'doctor__crm', 'date')
+        fields = ('doctor', 'crm')

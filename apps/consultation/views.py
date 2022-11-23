@@ -1,7 +1,8 @@
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
+from rest_framework import serializers
 from schedule.models import Schedule, Schedules
 from consultation.models import Consultation
-from consultation.serializer import ConsultationSerializer
+from consultation.serializer import ConsultationListSerializer, ConsultationCreateSerializer
 from datetime import datetime, date
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
@@ -9,6 +10,9 @@ from rest_framework import status
 from consultation.validators import can_schedule
 from apps.utils import today
 from django.http import Http404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import action
 
 class ConsultationViewSet(GenericViewSet,
                           mixins.ListModelMixin,
@@ -16,24 +20,30 @@ class ConsultationViewSet(GenericViewSet,
                           mixins.DestroyModelMixin):
     
     queryset = Consultation.objects.all()
-    serializer_class = ConsultationSerializer
+    serializer_class = ConsultationListSerializer
+    serializer_action_classes = {
+        'create':ConsultationCreateSerializer,
+    }
+    
+    def get_serializer_class(self, *args, **kwargs):
+        """Instantiate the list of serializers per action from class attribute (must be defined)."""
+        try:
+            return self.serializer_action_classes[self.action]
+        except (KeyError, AttributeError):
+            return super(ConsultationViewSet, self).get_serializer_class()
     
     def get_queryset(self):
         return self.queryset.filter(schedule__date__gte=date.today(),schedules__hour__gte=datetime.now().strftime('%H:%M'))
     
     def create(self, request, *args, **kwargs):
-        schedule_id = request.data['schedule_id']
-        schedule_hour = request.data['hour']
-        appointment = Schedules.objects.get(schedule=schedule_id, hour = schedule_hour)
-        appointment_valid = can_schedule(appointment)
-        if not appointment_valid:
-            raise APIException('schedule or schedule not available')
-        new_consultation = Consultation.objects.create(schedule_id=appointment.schedule.pk, schedules_id = appointment.pk)
-        new_consultation.save()
-        appointment.available = False
-        appointment.save()
-        serializer = ConsultationSerializer(new_consultation)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = self.get_serializer_class()
+        consultation = serializer(data=request.data)
+        if consultation.is_valid(raise_exception=True):
+            appointment = consultation.save()
+            result = ConsultationListSerializer(appointment)
+            print(result.data)
+            response = Response(result.data, status=status.HTTP_201_CREATED)
+            return response
     
     def destroy(self, request, *args, **kwargs):
         try:

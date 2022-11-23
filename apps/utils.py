@@ -5,4 +5,4 @@ def today():
     return date.today()
 
 def now():
-    return datetime.now().strftime('%H:%M:%S')
+    return datetime.now().strftime('%H:%M')
