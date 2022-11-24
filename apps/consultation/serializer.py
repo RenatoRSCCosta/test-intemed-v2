@@ -25,9 +25,8 @@ class ConsultationCreateSerializer(serializers.ModelSerializer):
         try:
             appointment = Schedules.objects.get(schedule_id = validated_data["schedule_id"], hour = validated_data['hour'])
             return Consultation.objects.create(schedule_id=appointment.schedule.pk,schedules_id=appointment.pk)
-        except IntegrityError as e:
-            if 'unique constraint' in e.args:
-                raise serializers.ValidationError("it is not possible to schedule an appointment already scheduled")
+        except IntegrityError:
+            raise serializers.ValidationError("it is not possible to schedule an appointment already scheduled")
         
     
     class Meta:
