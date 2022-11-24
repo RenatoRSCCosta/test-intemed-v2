@@ -2,8 +2,7 @@ from datetime import date, datetime
 from django.db.models import Q
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
-from rest_framework import generics
+from rest_framework.viewsets import mixins, GenericViewSet
 from schedule.models import Schedule
 from schedule.serializer import ScheduleSerializer
 from schedule.filters import ScheduleFilter
@@ -27,7 +26,3 @@ class ScheduleViewSet(GenericViewSet,
         serializer = ScheduleSerializer(filter_queryset, many=True)
         return Response(serializer.data)
     
-    #def list(self, *args, **kwargs):
-    #    queryset = self.get_queryset()
-    #    serializer = ScheduleSerializer(queryset, many=True)
-    #    return Response(serializer.data)

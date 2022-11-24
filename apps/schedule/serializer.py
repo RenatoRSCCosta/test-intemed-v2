@@ -1,7 +1,5 @@
-from asyncore import read
 from rest_framework import serializers
 from schedule.models import Schedule, Schedules
-from schedule.validators import schedules_available
 from doctor.serializer import DoctorSerializer
 from datetime import datetime, date
 from django.db.models import Q

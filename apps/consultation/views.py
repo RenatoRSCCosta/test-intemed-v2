@@ -1,18 +1,12 @@
-from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
-from rest_framework import serializers
-from schedule.models import Schedule, Schedules
+from rest_framework.viewsets import mixins, GenericViewSet
 from consultation.models import Consultation
 from consultation.serializer import ConsultationListSerializer, ConsultationCreateSerializer
 from datetime import datetime, date
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 from rest_framework import status
-from consultation.validators import can_schedule
 from apps.utils import today
 from django.http import Http404
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import action
 
 class ConsultationViewSet(GenericViewSet,
                           mixins.ListModelMixin,
