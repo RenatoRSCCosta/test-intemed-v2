@@ -10,6 +10,6 @@ router.register('consultations', ConsultationViewSet, basename="consultations")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('schedules/', ScheduleViewSet.as_view()),
+    path('swagger/', include('swagger.urls')),
     path('', include(router.urls)),
 ]
